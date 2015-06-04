@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {
   console.log("Getting home page...");
   // direct way
 
-  rest.get('https://eu.ldcvia.com/1.0/collections/blog/entry', {headers: {'apikey': '8dc950a4dfe6ccb45d2470906dff00a2'}})
+  rest.get('https://eu.ldcvia.com/1.0/collections/blog/entry', {headers: {'apikey': 'ffcb216445defbf0450dc1719a5a5117'}})
     .on('timeout', function(ms){
       console.log('did not return within '+ms+' ms');
     })
