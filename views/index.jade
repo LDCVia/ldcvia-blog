@@ -10,7 +10,7 @@ block content
     div.row
       div.two-thirds.column
         h2
-          a(href="/" + entry.__unid) #{entry.title}
+          a(href="/blog/" + entry.__unid) #{entry.title}
         p!= entry.body
       div.one-third.column
         h5 Categories
@@ -23,3 +23,15 @@ block content
             li= tag
         h5 Published
         | #{moment(entry.__created).format('LLL')} by #{entry.createdby}
+
+  div.row
+    div.one-half.column
+      if (previous > 0)
+        a(href="/page/" + previous) Previous
+      else
+        | Previous
+    div.one-half.column
+      if ((next * count) < entries.count)
+        a(href="/page/" + next) Next
+      else
+        | Next
