@@ -12,13 +12,13 @@ block content
         h2= entry.title
         p!= entry.body
       div.one-third.column
-        h3 Categories
+        h5 Categories
         ul
           each category in entry.categories
             li= category
-        h3 Tags
+        h5 Tags
         ul
           each tag in entry.tags
             li= tag
-        h3= entry.__created
-        h3= entry.createdby
+        h5 Published
+        | #{moment(entry.__created).format('LLL')} by #{entry.createdby}
