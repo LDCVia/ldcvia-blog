@@ -1,0 +1,24 @@
+extends layout
+
+block content
+  div.row
+    div.one-half.column
+      h1= title
+      p Welcome to #{title}
+
+  each entry in entries.data
+    div.row
+      div.two-thirds.column
+        h2= entry.title
+        p!= entry.body
+      div.one-third.column
+        h3 Categories
+        ul
+          each category in entry.categories
+            li= category
+        h3 Tags
+        ul
+          each tag in entry.tags
+            li= tag
+        h3= entry.__created
+        h3= entry.createdby
