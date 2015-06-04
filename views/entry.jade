@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  div.row
+    div.one-half.column
+      h1 Blog
+      a(href="/") Home
+
+  div.row
+    div.two-thirds.column
+      h2= entry.title
+      p!= entry.body
+    div.one-third.column
+      h5 Categories
+      ul
+        each category in entry.categories
+          li= category
+      h5 Tags
+      ul
+        each tag in entry.tags
+          li= tag
+      h5 Published
+      | #{moment(entry.__created).format('LLL')} by #{entry.createdby}

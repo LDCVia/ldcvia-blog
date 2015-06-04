@@ -4,12 +4,13 @@ block content
   div.row
     div.one-half.column
       h1= title
-      p Welcome to #{title}
+      a(href="/") Home
 
   each entry in entries.data
     div.row
       div.two-thirds.column
-        h2= entry.title
+        h2
+          a(href="/" + entry.__unid) #{entry.title}
         p!= entry.body
       div.one-third.column
         h5 Categories
