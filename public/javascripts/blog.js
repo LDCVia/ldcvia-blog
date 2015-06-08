@@ -8,3 +8,9 @@ var disqus_shortname = 'ldc-via-blog';
     s.src = '//' + disqus_shortname + '.disqus.com/count.js';
     (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
 }());
+
+$(document).ready(function(){
+  if ($("#body").length > 0){
+    CKEDITOR.replace( 'body' );
+  }
+})

@@ -25,7 +25,7 @@ router.get('/page/:pageno', function(req, res, next) {
     }
   )
   .on('complete',function(data,response){
-    res.render('index', { title: config.title, subtitle:  'Home Page ' + req.params.pageno, entries: data, count: count, next: parseInt(req.params.pageno, 10) + 1, previous: parseInt(req.params.pageno, 10) - 1 });
+    res.render('index', { title: config.title, subtitle:  "", entries: data, count: count, next: parseInt(req.params.pageno, 10) + 1, previous: parseInt(req.params.pageno, 10) - 1 });
   });
 });
 
@@ -77,6 +77,44 @@ router.get('/tag/:tag', function(req, res, next) {
     res.render('index', { title: config.title, subtitle: "Tag: " + req.params.tag, entries: data, count: count, next: null, previous: null });
   });
 });
+
+/* GET new post form */
+router.get('/new', function(req, res, next) {
+  res.render('newpost', { title: config.title, subtitle:  'New Post'});
+});
+
+/* POST new form */
+router.post('/new', function(req, res, next){
+  var doc = {};
+  doc.title = req.body.title;
+  doc.categories = req.body.categories;
+  if (doc.categories.indexOf(",") > -1){
+    doc.categories = doc.categories.split(",");
+  }else{
+    doc.categories = [doc.categories];
+  }
+  doc.tags = req.body.tags;
+  if (doc.tags.indexOf(",") > -1){
+    doc.tags = doc.tags.split(",");
+  }else{
+    doc.tags = [doc.tags];
+  }
+  doc.body = req.body.body;
+  doc.createdby = req.body.createdby;
+
+  var unid = doc.title.replace(" ", "-");
+  unid += "-" + new Date().getTime();
+  rest.putJson(config.hostname + '/document/blog/entry/' + unid,
+    doc,
+    {headers:
+      {'apikey': config.publicapikey}
+    }
+  )
+  .on('complete',function(data,response){
+    console.log(data);
+    res.redirect("/");
+  });
+})
 
 
 module.exports = router;

@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  form(action="/new", method="POST")
+    div.row
+      div.two-thirds.column
+        label(for="title") Title
+        input.u-full-width(type="text", placeholder="Title", id="title", name="title")
+        label(for="body") Body
+        textarea.u-full-width(placeholder="Body", id="body", name="body")
+
+
+      div.one-third.column
+        label(for="categories") Categories
+        input.u-full-width(type="text", placeholder="Categories (separate with ,)", id="categories", name="categories")
+        label(for="tags") Tags
+        input.u-full-width(type="text", placeholder="Tags (separate with ,)", id="tags", name="tags")
+        label(for="createdby") Created By
+        input.u-full-width(type="text", placeholder="Created By", id="createdby", name="createdby")
+    div.row
+      input.button-primary(type="submit" value="Submit")
+
+  script(src="//cdn.ckeditor.com/4.4.7/standard/ckeditor.js")
