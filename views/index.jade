@@ -1,37 +1,37 @@
 extends layout
 
 block content
-  div.row
-    div.one-half.column
-      h1= title
-      a(href="/") Home
 
   each entry in entries.data
     div.row
       div.two-thirds.column
-        h2
+        h4
           a(href="/blog/" + entry.__unid) #{entry.title}
         p!= entry.body
       div.one-third.column
-        h5 Categories
+        strong Categories
         ul
           each category in entry.categories
-            li= category
-        h5 Tags
+            li
+              a(href="/category/" + category) #{category}
+        strong Tags
         ul
           each tag in entry.tags
-            li= tag
-        h5 Published
+            li
+              a(href="/tag/" + tag) #{tag}
+        ul
+          li
+            a(href="/blog/" + entry.__unid + "#disqus_thread") 0 Comments
+
         | #{moment(entry.__created).format('LLL')} by #{entry.createdby}
 
-  div.row
-    div.one-half.column
-      if (previous > 0)
-        a(href="/page/" + previous) Previous
-      else
-        | Previous
-    div.one-half.column
-      if ((next * count) < entries.count)
-        a(href="/page/" + next) Next
-      else
-        | Next
+  if (next != null && previous != null)
+    div.row
+      div.one-half.column
+        if (previous > 0)
+          a(href="/page/" + previous)
+            i.fa.fa-arrow-left(title="Previous", alt="Previous")
+      div.one-half.column
+        if ((next * count) < entries.count)
+          a(href="/page/" + next)
+            i.fa.fa-arrow-right(title="Next", alt="Next")

@@ -7,6 +7,20 @@ html
     link(rel="stylesheet", href="/stylesheets/normalize.css")
     link(rel="stylesheet", href="/stylesheets/skeleton.css")
     link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel="stylesheet", href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css")
   body
     div.container
+      a.header-icon.u-pull-right(href="https://facebook.com/ldcvia", title="LDC Via's Facebook Page")
+        i.fa.fa-2x.fa-facebook
+      a.header-icon.u-pull-right(href="https://twitter.com/ldcvia", title="LDC Via's Twitter")
+        i.fa.fa-2x.fa-twitter
+      a.header-icon.u-pull-right(href="/", title="Home")
+        i.fa.fa-2x.fa-home
+      div.row
+        div.one-half.column
+          h3
+            a(href="/") #{title}
+          h4= subtitle
       block content
+
+    script(src="/javascripts/blog.js")

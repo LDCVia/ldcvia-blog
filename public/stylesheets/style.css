@@ -1,8 +1,10 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+a, a:hover, a:visited, a:active {
+  color: #E30D19;
 }
 
-a {
-  color: #00B7FF;
+h3 a, h4 a, li a {
+  text-decoration: none;
+}
+.header-icon {
+  padding: 3px;
 }
