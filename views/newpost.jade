@@ -16,7 +16,7 @@ block content
         label(for="tags") Tags
         input.u-full-width(type="text", placeholder="Tags (separate with ,)", id="tags", name="tags")
         label(for="createdby") Created By
-        input.u-full-width(type="text", placeholder="Created By", id="createdby", name="createdby")
+        input.u-full-width(type="text", placeholder="Created By", id="createdby", name="createdby", value=user.displayName)
     div.row
       input.button-primary(type="submit" value="Submit")
 
