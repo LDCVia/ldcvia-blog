@@ -5,18 +5,20 @@ block content
     div.row
       div.two-thirds.column
         label(for="title") Title
-        input.u-full-width(type="text", placeholder="Title", id="title", name="title")
+        input.u-full-width(type="text", placeholder="Title", id="title", name="title", value=data.title)
+        input(type="hidden", value=data.__unid, name="__unid", id="__unid")
         label(for="body") Body
         textarea.u-full-width(placeholder="Body", id="body", name="body")
+          | #{data.body}
 
 
       div.one-third.column
         label(for="categories") Categories
-        input.u-full-width(type="text", placeholder="Categories (separate with ,)", id="categories", name="categories")
+        input.u-full-width(type="text", placeholder="Categories (separate with ,)", id="categories", name="categories", value=data.categories ? data.categories.join(",") : "")
         label(for="tags") Tags
-        input.u-full-width(type="text", placeholder="Tags (separate with ,)", id="tags", name="tags")
+        input.u-full-width(type="text", placeholder="Tags (separate with ,)", id="tags", name="tags", value=data.tags ? data.tags.join(",") : "")
         label(for="createdby") Created By
-        input.u-full-width(type="text", placeholder="Created By", id="createdby", name="createdby", value=user.displayName)
+        input.u-full-width(type="text", placeholder="Created By", id="createdby", name="createdby", value=data.createdby ? data.createdby : user.displayName)
     div.row
       input.button-primary(type="submit" value="Submit")
 

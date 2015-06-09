@@ -3,6 +3,9 @@ extends layout
 block content
 
   div.row
+    if (user)
+      a.button(href="/edit/" + entry.__unid) Edit
+      a.button(href="/delete/" + entry.__unid) Delete
     div.two-thirds.column
       p!= entry.body
     div.one-third.column

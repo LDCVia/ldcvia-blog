@@ -28,9 +28,16 @@ block content
   if (next != null && previous != null)
     div.row
       div.one-half.column
-        if (previous >= 0)
+        if (previous > 0)
           a(href="/page/" + previous)
             i.fa.fa-arrow-left(title="Previous", alt="Previous")
+            | Previous
+        else if (previous == 0)
+          a(href="/")
+            i.fa.fa-arrow-left(title="Previous", alt="Previous")
+            | Previous
+        else
+          | &nbsp;
       div.one-half.column
         if ((next * count) < entries.count)
           a(href="/page/" + next) Next

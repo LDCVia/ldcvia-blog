@@ -29,7 +29,12 @@ router.get('/auth/google',
 router.get('/oauth2callback',
   passport.authenticate('google', { failureRedirect: '/login', hostedDomain: 'ldcvia.com*' }),
   function(req, res) {
-    res.redirect('/');
+    for (var i=0; i<req.user.emails.length; i++){
+      if (req.user.emails[i].value.indexOf("@ldcvia.com") > -1){
+        res.redirect('/');
+      }
+    }
+    res.redirect("/login");
   }
 );
 
@@ -67,7 +72,7 @@ router.get('/', function(req, res, next) {
     }
   )
   .on('complete',function(data,response){
-    res.render('index', { title: config.title, subtitle: "", entries: data, count: count, next: 1, previous: 0, user: req.user });
+    res.render('index', { title: config.title, subtitle: "", entries: data, count: count, next: 1, previous: -1, user: req.user });
   });
 });
 
@@ -135,8 +140,31 @@ router.get('/tag/:tag', function(req, res, next) {
 
 /* GET new post form */
 router.get('/new', ensureAuthenticated, function(req, res, next) {
-  res.render('newpost', { title: config.title, subtitle:  'New Post', user: req.user});
+  res.render('newpost', { title: config.title, subtitle:  'New Post', user: req.user, data: {}});
 });
+
+router.get('/edit/:id', ensureAuthenticated, function(req, res, next){
+  rest.get(config.hostname + '/document/blog/entry/' + req.params.id,
+    {headers:
+      {'apikey': config.publicapikey}
+    }
+  )
+  .on('complete', function(data,response){
+    res.render('newpost', { title: config.title, subtitle:  'Edit Post', user: req.user, data: data});
+  });
+});
+
+router.get('/delete/:id', ensureAuthenticated, function(req, res, next){
+  rest.del(config.hostname + '/document/blog/entry/' + req.params.id,
+    {headers:
+      {'apikey': config.publicapikey}
+    }
+  )
+  .on('complete', function(data,response){
+    res.redirect("/");
+  });
+});
+
 
 /* POST new form */
 router.post('/new', ensureAuthenticated, function(req, res, next){
@@ -156,19 +184,36 @@ router.post('/new', ensureAuthenticated, function(req, res, next){
   }
   doc.body = req.body.body;
   doc.createdby = req.body.createdby;
-
-  var unid = doc.title.replace(/ |\?|\&|\=|\#|\\|\/|\$|\"|\'|\<|\>|\(|\)|\;|\:|\||\%|\!/g, "-");
-  unid += "-" + new Date().getTime();
-  rest.putJson(config.hostname + '/document/blog/entry/' + unid,
-    doc,
-    {headers:
-      {'apikey': config.publicapikey}
-    }
-  )
-  .on('complete',function(data,response){
-    console.log(data);
-    res.redirect("/");
-  });
+  var unid = req.body.__unid;
+  var update = true;
+  if (!unid){
+    unid = doc.title.replace(/ |\?|\&|\=|\#|\\|\/|\$|\"|\'|\<|\>|\(|\)|\;|\:|\||\%|\!/g, "-");
+    unid += "-" + new Date().getTime();
+    update = false;
+  }
+  if (update){
+    rest.postJson(config.hostname + '/document/blog/entry/' + unid,
+      doc,
+      {headers:
+        {'apikey': config.publicapikey}
+      }
+    )
+    .on('complete',function(data,response){
+      console.log(data);
+      res.redirect("/");
+    });
+  }else{
+    rest.putJson(config.hostname + '/document/blog/entry/' + unid,
+      doc,
+      {headers:
+        {'apikey': config.publicapikey}
+      }
+    )
+    .on('complete',function(data,response){
+      console.log(data);
+      res.redirect("/");
+    });
+  }
 })
 
 
