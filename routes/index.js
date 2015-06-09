@@ -157,7 +157,7 @@ router.post('/new', ensureAuthenticated, function(req, res, next){
   doc.body = req.body.body;
   doc.createdby = req.body.createdby;
 
-  var unid = doc.title.replace(" ", "-");
+  var unid = doc.title.replace(/ |\?|\&|\=|\#|\\|\/|\$|\"|\'|\<|\>|\(|\)|\;|\:|\||\%|\!/g, "-");
   unid += "-" + new Date().getTime();
   rest.putJson(config.hostname + '/document/blog/entry/' + unid,
     doc,
