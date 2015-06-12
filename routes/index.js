@@ -47,7 +47,7 @@ router.get('/logout', function(req, res){
 
 
 router.get('/login', function(req, res){
-  res.render('login', { title: config.title, subtitle: 'Login', user: req.user })
+  res.render('login', { title: config.title, subtitle: 'Login', user: req.user, domain: config.domain })
 });
 
 
