@@ -4,6 +4,7 @@ var rest = require('restler');
 var app = express();
 var config = require('../config');
 config.publicapikey = process.env.PUBLICAPIKEY;
+config.domain = process.env.GOOGLE_APPS_DOMAIN;
 var passport = require('passport')
 var GoogleStrategy = require('passport-google-oauth').OAuthStrategy;
 var count = 5;
@@ -15,7 +16,7 @@ var count = 5;
 //   redirecting the user to google.com.  After authorization, Google
 //   will redirect the user back to this application at /auth/google/callback
 router.get('/auth/google',
-  passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login', 'email'], hostedDomain: 'ldcvia.com*' }),
+  passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login', 'email'], hostedDomain: config.domain + '*' }),
   function(req, res){
     // The request will be redirected to Google for authentication, so this
     // function will not be called.
@@ -28,10 +29,10 @@ router.get('/auth/google',
 //   login page.  Otherwise, the primary route function function will be called,
 //   which, in this example, will redirect the user to the home page.
 router.get('/oauth2callback',
-  passport.authenticate('google', { failureRedirect: '/login', hostedDomain: 'ldcvia.com*' }),
+  passport.authenticate('google', { failureRedirect: '/login', hostedDomain: config.domain + '*' }),
   function(req, res) {
     for (var i=0; i<req.user.emails.length; i++){
-      if (req.user.emails[i].value.indexOf("@ldcvia.com") > -1){
+      if (req.user.emails[i].value.indexOf("@" + config.domain) > -1){
         res.redirect('/');
       }
     }
@@ -58,7 +59,7 @@ router.get('/login', function(req, res){
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
     for (var i=0; i<req.user.emails.length; i++){
-      if (req.user.emails[i].value.indexOf("@ldcvia.com") > -1){
+      if (req.user.emails[i].value.indexOf("@" + config.domain) > -1){
         return next();
       }
     }
