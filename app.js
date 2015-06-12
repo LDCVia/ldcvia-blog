@@ -10,8 +10,8 @@ var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 // API Access link for creating client ID and secret:
 // https://code.google.com/apis/console/
-var GOOGLE_CLIENT_ID = "150678935719-3v0drsrs136d7b695m8njdbedqja1vm1.apps.googleusercontent.com";
-var GOOGLE_CLIENT_SECRET = "X6bjUqTSGsidZSaihnocHO3r";
+var GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+var GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 
 
 passport.serializeUser(function(user, done) {

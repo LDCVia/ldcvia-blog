@@ -3,6 +3,7 @@ var router = express.Router();
 var rest = require('restler');
 var app = express();
 var config = require('../config');
+config.publicapikey = process.env.PUBLICAPIKEY;
 var passport = require('passport')
 var GoogleStrategy = require('passport-google-oauth').OAuthStrategy;
 var count = 5;
