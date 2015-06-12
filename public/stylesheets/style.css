@@ -8,3 +8,7 @@ h3 a, h4 a, li a {
 .header-icon {
   padding: 3px;
 }
+img {
+  max-width: 100%;
+}
+.gist .gist-data { overflow-y: hidden; height: 195px }
